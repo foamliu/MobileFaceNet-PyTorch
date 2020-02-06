@@ -88,8 +88,8 @@ def train_net(args):
         writer.add_scalar('model/megaface_accuracy', megaface_acc, epoch)
 
         # Check if there was an improvement
-        is_best = lfw_acc > best_acc
-        best_acc = max(lfw_acc, best_acc)
+        is_best = megaface_acc > best_acc
+        best_acc = max(megaface_acc, best_acc)
         if not is_best:
             epochs_since_improvement += 1
             print("\nEpochs since last improvement: %d\n" % (epochs_since_improvement,))
