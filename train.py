@@ -7,7 +7,7 @@ from torch.utils.tensorboard import SummaryWriter
 from config import device, grad_clip, print_freq
 from data_gen import ArcFaceDataset
 from focal_loss import FocalLoss
-from lfw_eval import lfw_test
+from megaface_eval import megaface_test
 from mobilefacenet import MobileFaceNet, ArcMarginModel
 from utils import parse_args, save_checkpoint, AverageMeter, accuracy, get_logger, clip_gradient
 
@@ -84,9 +84,8 @@ def train_net(args):
         writer.add_scalar('model/learning_rate', lr, epoch)
 
         # One epoch's validation
-        lfw_acc, threshold = lfw_test(model)
-        writer.add_scalar('model/lfw_acc', lfw_acc, epoch)
-        writer.add_scalar('model/threshold', threshold, epoch)
+        megaface_acc = megaface_test(model)
+        writer.add_scalar('model/megaface_accuracy', megaface_acc, epoch)
 
         # Check if there was an improvement
         is_best = lfw_acc > best_acc
